@@ -1,9 +1,16 @@
 """Forms of the project."""
 from django import forms
-from django.core import validators
+from .models import Thing
 
 
-class ThingForm(forms.Form):
-    name = forms.CharField(max_length=36, required=True)
-    description = forms.CharField(widget=forms.Textarea, required=True)
-    quantity = forms.IntegerField(widget=forms.NumberInput, min_value=0, max_value=50)
+class ThingForm(forms.ModelForm):
+    """Form for the Thing model."""
+
+    class Meta:
+        model = Thing
+        fields = ['name', 'description', 'quantity']
+        widgets = {
+            'name': forms.TextInput(),
+            'description': forms.Textarea(),
+            'quantity': forms.NumberInput(),
+        }
